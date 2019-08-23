@@ -8,6 +8,7 @@ div.dateLabel {
     padding: 6px;
     position: absolute;
     text-align: right;
+    transition: 0.4s opacity;
     width: 100%;
     z-index: 20;
 }
