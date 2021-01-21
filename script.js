@@ -1,3 +1,17 @@
+if (window.trustedTypes && trustedTypes.createPolicy) { // Feature testing
+  const escapeHTMLPolicy = trustedTypes.createPolicy("myEscapePolicy", {
+    createHTML: string => string,
+  });
+
+  function createFromRawHtml(htmlString) {
+    return escapeHTMLPolicy.createHTML(htmlString);
+  }
+} else {
+  function createFromRawHtml(htmlString) {
+    return htmlString;
+  }
+}
+
 function appendDateLabelToPhoto(target) {
   var photoContainer = target.parentElement && target.parentElement.parentElement;
   if (!photoContainer || !photoContainer.classList.contains("nV0gYe")) {
@@ -23,7 +37,7 @@ function appendDateLabelToPhoto(target) {
 
     target.insertAdjacentHTML(
       "afterBegin",
-      "<div class='" + className + "' style='opacity: 0'>" + labelFields[labelFields.length - 1] + "</div>");
+      createFromRawHtml("<div class='" + className + "' style='opacity: 0'>" + labelFields[labelFields.length - 1] + "</div>"));
 
     setTimeout(() => target.getElementsByClassName(className)[0].style.opacity = "", 1);
   }
