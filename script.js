@@ -34,10 +34,11 @@ function appendDateLabelToPhoto(target) {
   if (text && text.value) {
     // The field comes as something like "Photo - Landscape - [datestamp]", so split it.
     var labelFields = text.value.split(" - ");
+    var dateText = labelFields.map(f => /[0-9/]+ [0-9:]+/.exec(f)).filter(f => !!f)[0][0];
 
     target.insertAdjacentHTML(
       "afterBegin",
-      createFromRawHtml("<div class='" + className + "' style='opacity: 0'>" + labelFields[labelFields.length - 1] + "</div>"));
+      createFromRawHtml("<div class='" + className + "' style='opacity: 0'>" + dateText + "</div>"));
 
     setTimeout(() => target.getElementsByClassName(className)[0].style.opacity = "", 1);
   }
